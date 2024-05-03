@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
+import Menu from "./Menu";
 
 export default function Post() {
   return (
-    <div className="max-w-screen-xl mx-auto mt-24 mb-10">
-      <div className="content h-[350px] w-[65%] mb-4">
-        <img
-          className="w-full h-full object-cover"
-          src="https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="Image"
-        />
-      </div>
-      <div className=" w-[65%]">
+    <div className="max-w-screen-lg mx-auto mt-24 mb-10 flex gap-6">
+      <div className="basis-2/3">
+        <div className="content h-[350px] mb-4">
+          <img
+            className="w-full h-full object-cover"
+            src="https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Image"
+          />
+        </div>
+
         <div className="user-info flex gap-4 w-full mb-2">
           <div className="flex gap-3">
             <div className="user">
@@ -38,7 +40,7 @@ export default function Post() {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
           officiis dolorem quaerat repudiandae.
         </h1>
-        <div className="flex flex-col gap-4 text-justify leading-7">
+        <div className="flex flex-col gap-4 text-justify leading-7 text-gray-500">
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio,
             quidem cumque. Aliquid nemo nesciunt perspiciatis animi molestiae,
@@ -82,6 +84,7 @@ export default function Post() {
           </p>
         </div>
       </div>
+      <Menu />
     </div>
   );
 }
