@@ -36,13 +36,15 @@ export default function WritePost() {
           <input type="file" name="" id="file" className="hidden" />
           <label
             htmlFor="file"
-            className=" mb-2 cursor-pointer border border-blue-500 text-blue-500 rounded-md
-             p-1 hover:text-white hover:bg-blue-500 transition text-xs"
+            className=" mb-2 cursor-pointer text-xs underline"
           >
             Upload Image
           </label>
-          <div className="buttons flex items-center justify-between mt-4 text-sm">
-            <button className="text-blue-500 hover:underline">
+          <div className="buttons flex items-center justify-between mt-4 text-xs">
+            <button
+              className="cursor-pointer border border-blue-500 text-blue-500 rounded-md
+             p-1 hover:text-white hover:bg-blue-500 transition"
+            >
               Save as Draft
             </button>
             <button className="bg-blue-500 text-white rounded-md p-1.5">
@@ -50,15 +52,15 @@ export default function WritePost() {
             </button>
           </div>
         </div>
-        <div className="item2 px-2 border border-gray-400 flex flex-col py-2 gap-2 text-sm">
+        <div className="item2 px-2 border border-gray-400 flex flex-col py-2 gap-2 text-sm text-blue-500">
           <h1 className="font-bold text-xl text-gray-900 ">Category</h1>
           <div>
-            <input type="radio" name="category" value={"art"} id="art" />
+            <input type="radio" className="mr-2" name="category" value={"art"} id="art" />
             <label htmlFor="art">Art</label>
           </div>
           <div>
             <input
-              type="radio"
+              type="radio" className="mr-2"
               name="category"
               value={"science"}
               id="science"
@@ -68,7 +70,7 @@ export default function WritePost() {
           <div>
             {" "}
             <input
-              type="radio"
+              type="radio" className="mr-2"
               name="category"
               value={"technology"}
               id="technology"
@@ -76,15 +78,15 @@ export default function WritePost() {
             <label htmlFor="technology">Technology</label>
           </div>
           <div>
-            <input type="radio" name="category" value={"cinema"} id="cinema" />
+            <input type="radio" className="mr-2" name="category" value={"cinema"} id="cinema" />
             <label htmlFor="cinema">Cinema</label>
           </div>
           <div>
-            <input type="radio" name="category" value={"design"} id="design" />
+            <input type="radio" className="mr-2" name="category" value={"design"} id="design" />
             <label htmlFor="design">Design</label>
           </div>
           <div>
-            <input type="radio" name="category" value={"food"} id="food" />
+            <input type="radio" className="mr-2" name="category" value={"food"} id="food" />
             <label htmlFor="food">Food</label>
           </div>
         </div>
