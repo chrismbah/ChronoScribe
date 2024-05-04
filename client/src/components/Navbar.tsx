@@ -4,9 +4,12 @@ export default function Navbar() {
   return (
     <nav className="w-full fixed top-0 left-0 p-2 xsm:p-4 shadow-sm z-10">
       <div className=" flex flex-wrap items-center justify-between  p-4 max-w-screen-xl mx-auto">
-        <span className="self-center text-2xl font-semibold whitespace-nowrap">
-          ChronoScribe
-        </span>
+        <Link to="/">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap">
+            ChronoScribe
+          </span>
+        </Link>
+
         <button
           data-collapse-toggle="navbar-default"
           type="button"
