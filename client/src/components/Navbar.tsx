@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 export default function Navbar() {
+  const { user, logout } = useContext(AuthContext);
   return (
     <nav className="w-full fixed top-0 left-0 p-2 xsm:p-4 shadow-sm z-10">
       <div className=" flex flex-wrap items-center justify-between  p-4 max-w-screen-xl mx-auto">
@@ -87,7 +90,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="flex items-center gap-4 text-sm">
-          <p>John</p>
+          <p>{user && user.username}</p>
           <span>
             <Link
               to="/write-post"
@@ -96,9 +99,15 @@ export default function Navbar() {
               Write a Post
             </Link>
           </span>
-          <button className="p-2 rounded-md text-white font-medium bg-blue-500 text-xs">
-            Logout
-          </button>
+          {user ? (
+            <button onClick={logout} className="p-2 rounded-md text-white font-medium bg-blue-500 text-xs">
+              Logout
+            </button>
+          ) : (
+            <Link to="/login" className="p-2 rounded-md text-white font-medium bg-blue-500 text-xs">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>

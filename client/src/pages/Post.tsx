@@ -1,14 +1,56 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import moment from "moment";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
+interface Post {
+  post_id: number;
+  title: string;
+  desc: string;
+  img: string;
+  category: string;
+  user_id: string;
+  username: string;
+  user_img: string;
+  date: Date;
+}
 export default function Post() {
+  const [post, setPost] = useState<Post | null>(null);
+  const { id } = useParams();
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/api/posts/${id}`);
+        setPost(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPost();
+  }, [id, post]);
+
+  const deletePost = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/api/posts/${id}`);
+      navigate("/");
+    } catch (err) {
+      console.log(err.message);
+      alert(err.message)
+    }
+  };
   return (
     <div className="max-w-screen-lg mx-auto mt-24 mb-10 flex gap-6">
       <div className="basis-2/3">
         <div className="content h-[350px] mb-4">
           <img
             className="w-full h-full object-cover"
-            src="https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src={post?.img}
             alt="Image"
           />
         </div>
@@ -17,71 +59,34 @@ export default function Post() {
           <div className="flex gap-3">
             <div className="user">
               <img
-                src="https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src={post?.img}
                 alt="Image"
                 className="w-12 h-12 rounded-full object-cover"
               />
             </div>
             <div className="info">
-              <span className="text-lg font-bold">John Doe</span>
-              <p className="text-xs font-light">Posted 2 days ago</p>
+              <span className="text-lg font-bold">{post?.username}</span>
+              <p className="text-xs font-light">
+                Posted {moment(post?.date).fromNow()}
+              </p>
             </div>
           </div>
-          <div className="action_btns flex gap-3 text-xs font-bold">
-            <button>
-              <Link to={`/write/?edit=2`} className="text-blue-500">
-                Edit
-              </Link>
-            </button>
-            <button className="text-red-500">Delete</button>
-          </div>
+          {user && user.username === post?.username && (
+            <div className="action_btns flex gap-3 text-xs font-bold">
+              <button>
+                <Link to={`/write/?edit=2`} className="text-blue-500">
+                  Edit
+                </Link>
+              </button>
+              <button onClick={deletePost} className="text-red-500">
+                Delete
+              </button>
+            </div>
+          )}
         </div>
-        <h1 className="font-bold text-gray-900 text-3xl mb-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-          officiis dolorem quaerat repudiandae.
-        </h1>
+        <h1 className="font-bold text-gray-900 text-3xl mb-4">{post?.title}</h1>
         <div className="flex flex-col gap-4 text-justify leading-7 text-gray-500">
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio,
-            quidem cumque. Aliquid nemo nesciunt perspiciatis animi molestiae,
-            beatae ad voluptatibus fugiat consequatur totam blanditiis repellat
-            nam suscipit debitis incidunt nobis? Odit, ipsam dicta possimus
-            placeat quos doloremque quam ab! Explicabo quia maxime, dolorum
-            quibusdam optio natus, magni vel distinctio odio recusandae harum,
-            nam enim nisi illum. Deserunt similique soluta laborum?
-          </p>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum quos
-            placeat, accusantium, voluptatem commodi voluptate excepturi
-            asperiores veritatis esse dolorem, alias velit voluptatibus aliquid
-            ex minus autem officia inventore! Error.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatem, magni! Quod sit ipsa rem tempore adipisci voluptatum
-            optio similique natus! Velit, ad. Aspernatur, eaque voluptatum
-            doloremque pariatur labore quod obcaecati! Sequi tenetur praesentium
-            id velit impedit non quas, saepe eveniet repudiandae at ut illum ex!
-            Exercitationem quaerat voluptas odio natus placeat voluptates animi
-            veniam, ratione est assumenda minus molestiae omnis. Eum,
-            architecto. Doloremque tempora consequuntur voluptas praesentium
-            vitae ullam iure deleniti possimus eaque expedita quia, voluptates
-            obcaecati rem nobis assumenda sint impedit repudiandae molestiae
-            quibusdam velit facere porro dolores id!
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatem, magni! Quod sit ipsa rem tempore adipisci voluptatum
-            optio similique natus! Velit, ad. Aspernatur, eaque voluptatum
-            doloremque pariatur labore quod obcaecati! Sequi tenetur praesentium
-            id velit impedit non quas, saepe eveniet repudiandae at ut illum ex!
-            Exercitationem quaerat voluptas odio natus placeat voluptates animi
-            veniam, ratione est assumenda minus molestiae omnis. Eum,
-            architecto. Doloremque tempora consequuntur voluptas praesentium
-            vitae ullam iure deleniti possimus eaque expedita quia, voluptates
-            obcaecati rem nobis assumenda sint impedit repudiandae molestiae
-            quibusdam velit facere porro dolores id!
-          </p>
+          {post?.desc}
         </div>
       </div>
       <Menu />

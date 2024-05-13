@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 export default function Login() {
   const [inputs, setInputs] = useState({
     username: "",
@@ -11,6 +11,8 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  const { user, login } = useContext(AuthContext);
+
   const handleChange = (e: any) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -18,19 +20,15 @@ export default function Login() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/auth/login",
-        inputs
-      );
-      alert("User created");
+      await login(inputs);
+      alert("User login");
       navigate("/");
-      console.log(res);
     } catch (err: any) {
       setError(err.response.data);
       console.log(err.res.data);
     }
   };
-  console.log(inputs);
+  console.log(user);
   return (
     <div className="w-full h-screen flex items-center justify-center bg-[#fdfdfd]">
       <div className="bg-white rounded-md shadow-md p-8 w-[450px]">
